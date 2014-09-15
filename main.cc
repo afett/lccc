@@ -382,9 +382,9 @@ class cc_namespace : public cc_src {
 public:
 	typedef tr1::shared_ptr<cc_namespace> ptr_t;
 
-	static ptr_t make()
+	static ptr_t make(std::string const& name)
 	{
-		return ptr_t(new cc_namespace());
+		return ptr_t(new cc_namespace(name));
 	}
 
 	void add(src::ptr_t const& src)
@@ -394,14 +394,19 @@ public:
 
 	std::ostream & print(std::ostream & os) const
 	{
-		os << "namespace foo {\n";
+		os << "namespace " << name_ << " {\n";
 		print_content(os);
 		os << "}\n";
 		return os;
 	}
 
 private:
+	cc_namespace(std::string const& name)
+	:
+		name_(name)
+	{ }
 
+	std::string name_;
 };
 
 class cc_member : public cc_src {
@@ -599,10 +604,10 @@ int main()
 {
 	lccc::cc_header::ptr_t header(lccc::cc_header::make("foo.h"));
 
-	lccc::cc_namespace::ptr_t ns1(lccc::cc_namespace::make());
+	lccc::cc_namespace::ptr_t ns1(lccc::cc_namespace::make("ns1"));
 	header->add(ns1);
 
-	lccc::cc_namespace::ptr_t ns2(lccc::cc_namespace::make());
+	lccc::cc_namespace::ptr_t ns2(lccc::cc_namespace::make("ns2"));
 	ns1->add(ns2);
 
 	lccc::cc_class::ptr_t c1(lccc::cc_class::make("Foo"));
