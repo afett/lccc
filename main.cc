@@ -416,6 +416,27 @@ private:
 class cc_member : public cc_src {
 public:
 	typedef tr1::shared_ptr<cc_member> ptr_t;
+
+	static ptr_t make(std::string const& type, std::string const& name)
+	{
+		return ptr_t(new cc_member(type, name));
+	}
+
+	std::ostream & print(std::ostream & os) const
+	{
+		os << type_ << " " << name_ << "\n;";
+		return os;
+	}
+
+private:
+	cc_member(std::string const& type, std::string const& name)
+	:
+		name_(name),
+		type_(type)
+	{ }
+
+	std::string name_;
+	std::string type_;
 };
 
 
