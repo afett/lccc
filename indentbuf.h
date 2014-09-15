@@ -39,8 +39,9 @@ public:
 		owner_(NULL)
 	{ }
 
-	explicit indentbuf(std::ostream& dest)
+	explicit indentbuf(std::ostream& dest, std::string indent = "\t")
 	:
+		indent_(indent),
 		dest_(dest.rdbuf()),
 		line_start_(true),
 		owner_(&dest)
@@ -59,13 +60,14 @@ protected:
 	virtual int overflow(int ch)
 	{
 		if (line_start_ && ch != '\n') {
-			dest_->sputc('\t');
+			dest_->sputn(indent_.c_str(), indent_.size());
 		}
 		line_start_ = (ch == '\n');
 		return dest_->sputc(ch);
 	}
 
 private:
+	std::string indent_;
 	std::streambuf* dest_;
 	bool line_start_;
 	std::ostream* owner_;
