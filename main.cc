@@ -143,19 +143,23 @@ class cpp_include : public cpp_src {
 public:
 	typedef tr1::shared_ptr<cpp_include> ptr_t;
 
-	cpp_include()
+	static ptr_t make(std::string const& name)
 	{
-	}
-
-	static ptr_t make()
-	{
-		return ptr_t(new cpp_include());
+		return ptr_t(new cpp_include(name));
 	}
 
 	std::ostream & print(std::ostream & os) const
 	{
-		return os << "#include<foo.h>\n";
+		return os << "#include<" << name_ << ">\n";
 	}
+
+private:
+	cpp_include(std::string const& name)
+	:
+		name_(name)
+	{ }
+
+	std::string name_;
 };
 
 class cpp_endif : public cpp_src {
@@ -603,6 +607,9 @@ private:
 int main()
 {
 	lccc::cc_header::ptr_t header(lccc::cc_header::make("foo.h"));
+
+	lccc::cpp_include::ptr_t inc1(lccc::cpp_include::make("dbus/dbus.h"));
+	header->add(inc1);
 
 	lccc::cc_namespace::ptr_t ns1(lccc::cc_namespace::make("ns1"));
 	header->add(ns1);
