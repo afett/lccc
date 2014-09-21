@@ -23,54 +23,33 @@
    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef INDENTBUF_H
-#define INDENTBUF_H
+#include <lccc/cc.h>
+#include <lccc/indent.h>
 
-// http://stackoverflow.com/a/9600752
+namespace lccc {
 
-#include <iostream>
+cc_block::cc_block()
+{ }
 
-class indentbuf : public std::streambuf {
-public:
-	explicit indentbuf(std::streambuf* dest)
-	:
-		dest_(dest),
-		line_start_(true),
-		owner_(NULL)
-	{ }
+cc_block::ptr_t cc_block::make()
+{
+	return ptr_t(new cc_block());
+}
 
-	explicit indentbuf(std::ostream& dest, std::string indent = "\t")
-	:
-		indent_(indent),
-		dest_(dest.rdbuf()),
-		line_start_(true),
-		owner_(&dest)
+std::ostream & cc_block::print(std::ostream & os) const
+{
+	os << "{\n";
 	{
-		owner_->rdbuf(this);
+		indent ind(os);
+		os << source_.str();
 	}
+	os << "}\n";
+	return os;
+}
 
-	virtual ~indentbuf()
-	{
-		if (owner_ != NULL) {
-			owner_->rdbuf(dest_);
-		}
-	}
+std::ostream & cc_block::src()
+{
+	return source_;
+}
 
-protected:
-	virtual int overflow(int ch)
-	{
-		if (line_start_ && ch != '\n') {
-			dest_->sputn(indent_.c_str(), indent_.size());
-		}
-		line_start_ = (ch == '\n');
-		return dest_->sputc(ch);
-	}
-
-private:
-	std::string indent_;
-	std::streambuf* dest_;
-	bool line_start_;
-	std::ostream* owner_;
-};
-
-#endif
+}

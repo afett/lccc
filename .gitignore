@@ -1,0 +1,5 @@
+*.ghc
+*.o
+*.so
+test_*
+.clang_complete
