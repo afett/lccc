@@ -1,4 +1,4 @@
-DBUSCC_DEBUG = 1
+LCCC_DEBUG = 1
 
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Werror
