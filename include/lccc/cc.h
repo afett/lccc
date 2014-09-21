@@ -76,6 +76,7 @@ public:
 
 	void make_virtual();
 	void make_abstract();
+	void make_const();
 
 	std::ostream & print(std::ostream & os) const;
 
@@ -85,6 +86,7 @@ private:
 	std::string rtype_;
 	bool virtual_;
 	bool abstract_;
+	bool const_;
 };
 
 class cc_namespace : public container {

@@ -37,7 +37,8 @@ cc_method::cc_method(std::string const& rtype, std::string const& name)
 	cc_method_base(name),
 	rtype_(rtype),
 	virtual_(false),
-	abstract_(false)
+	abstract_(false),
+	const_(false)
 { }
 
 void cc_method::make_virtual()
@@ -51,12 +52,20 @@ void cc_method::make_abstract()
 	abstract_ = true;
 }
 
+void cc_method::make_const()
+{
+	const_ = true;
+}
+
 std::ostream & cc_method::print(std::ostream & os) const
 {
 	os << (virtual_ ? "virtual " : "");
 	os << rtype_ << " ";
 	os << name_;
 	os << "(" << (src_ ? named_args() : args()) << ")";
+	if (const_) {
+		os << " const";
+	}
 	if (abstract_) {
 		os << " = 0;";
 	} else if (src_) {
