@@ -56,7 +56,7 @@ std::ostream & cc_method::print(std::ostream & os) const
 	os << (virtual_ ? "virtual " : "");
 	os << rtype_ << " ";
 	os << name_;
-	os << "(" << args() << ")";
+	os << "(" << (src_ ? named_args() : args()) << ")";
 	if (abstract_) {
 		os << " = 0;";
 	} else if (src_) {
