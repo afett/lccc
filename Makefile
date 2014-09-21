@@ -22,17 +22,21 @@ OBJ = $(SRC:%.cc=%.o)
 
 TEST_SRC = $(wildcard tests/*.cc)
 TEST_OBJ = $(TEST_SRC:%.cc=%.o)
+TEST_LIB = libccc.a
 
 all: $(TARGET) $(TESTS)
 
 $(TARGET): $(OBJ)
 	$(CXX) -o $@ $(OBJ) $(LDFLAGS) -shared $(LIBS)
 
-$(TESTS): $(TARGET) $(TEST_OBJ)
-	$(CXX) -o $@ $(TEST_OBJ) $(LDFLAGS) $(LIBS) -lccc
+$(TEST_LIB): $(OBJ)
+	ar rcs $@ $^
+
+$(TESTS): $(TEST_LIB) $(TEST_OBJ)
+	$(CXX) -o $@ $(TEST_OBJ) $(TEST_LIB) $(LDFLAGS) $(LIBS)
 
 run_tests: $(TESTS)
-	LD_LIBRARY_PATH=. ./$(TESTS)
+	./$(TESTS)
 
 run_valgrind: $(TESTS)
 	LD_LIBRARY_PATH=. valgrind --leak-check=full ./$(TESTS)
@@ -41,7 +45,7 @@ run_gdb: $(TESTS)
 	LD_LIBRARY_PATH=. gdb ./$(TESTS)
 
 clean:
-	rm -rf $(OBJ) $(TARGET) $(TEST_OBJ) $(TESTS)
+	rm -rf $(OBJ) $(TARGET) $(TEST_OBJ) $(TESTS) $(TEST_LIB)
 
 .PHONY: all clean
 
