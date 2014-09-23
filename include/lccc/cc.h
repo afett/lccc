@@ -117,6 +117,34 @@ private:
 	std::string type_;
 };
 
+class cc_base_class : public src {
+public:
+        typedef boost::shared_ptr<cc_base_class> ptr_t;
+
+        class initializer : public src {
+        public:
+                typedef boost::shared_ptr<initializer> ptr_t;
+
+                std::ostream & print(std::ostream &) const;
+        private:
+                friend class cc_base_class;
+
+                initializer(std::string const&, std::string const&);
+
+                std::string name_;
+                std::string init_;
+        };
+
+        static ptr_t make(std::string const&);
+        std::ostream & print(std::ostream &) const;
+        initializer::ptr_t make_initializer(std::string const&);
+
+private:
+        cc_base_class(std::string const&);
+
+        std::string name_;
+};
+
 class cc_class : public container {
 public:
 	typedef boost::shared_ptr<cc_class> ptr_t;

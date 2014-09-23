@@ -20,6 +20,7 @@ private:
 	void test_method_const();
 	void test_method_args();
 	void test_method_definition();
+	void test_base_class();
 
 	CPPUNIT_TEST_SUITE(test);
 	CPPUNIT_TEST(test_namespace);
@@ -30,6 +31,7 @@ private:
 	CPPUNIT_TEST(test_method_const);
 	CPPUNIT_TEST(test_method_args);
 	CPPUNIT_TEST(test_method_definition);
+	CPPUNIT_TEST(test_base_class);
 	CPPUNIT_TEST_SUITE_END();
 };
 
@@ -149,6 +151,26 @@ void test::test_method_definition()
 		"}\n\n"
 	);
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_base_class()
+{
+	lccc::cc_base_class::ptr_t src(lccc::cc_base_class::make("foo"));
+
+	{
+		std::stringstream out;
+		src->print(out);
+		std::string expected("foo");
+		CPPUNIT_ASSERT_EQUAL(expected, out.str());
+	}
+
+	{
+		std::stringstream out;
+		lccc::cc_base_class::initializer::ptr_t init(src->make_initializer("42"));
+		init->print(out);
+		std::string expected("foo(42)");
+		CPPUNIT_ASSERT_EQUAL(expected, out.str());
+	}
 }
 
 }}
