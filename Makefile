@@ -9,6 +9,8 @@ ifeq ($(LCCC_DEBUG),1)
 CXXFLAGS += -g -O0
 endif
 
+PREFIX ?= /usr/local
+
 DEPS = cppunit
 
 CXXFLAGS += $(shell pkg-config --cflags $(DEPS)) -fPIC
@@ -43,6 +45,12 @@ run_valgrind: $(TESTS)
 
 run_gdb: $(TESTS)
 	LD_LIBRARY_PATH=. gdb ./$(TESTS)
+
+install: all
+	install -d $(PREFIX)/lib
+	install -m 755 $(TARGET) $(PREFIX)/lib/
+	install -d $(PREFIX)/include/lccc
+	install -m 644 include/lccc/* $(PREFIX)/include/lccc
 
 clean:
 	rm -rf $(OBJ) $(TARGET) $(TEST_OBJ) $(TESTS) $(TEST_LIB)
