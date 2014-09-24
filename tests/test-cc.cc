@@ -24,6 +24,7 @@ private:
 	void test_class();
 	void test_visibility();
 	void test_constructor();
+	void test_constructor_initializer();
 	void test_destructor();
 	void test_virtual_destructor();
 
@@ -40,6 +41,7 @@ private:
 	CPPUNIT_TEST(test_class);
 	CPPUNIT_TEST(test_visibility);
 	CPPUNIT_TEST(test_constructor);
+	CPPUNIT_TEST(test_constructor_initializer);
 	CPPUNIT_TEST(test_destructor);
 	CPPUNIT_TEST(test_virtual_destructor);
 	CPPUNIT_TEST_SUITE_END();
@@ -233,6 +235,32 @@ void test::test_constructor()
 		"foo(std::string const& str)\n"
 		"{\n"
 		"\tdo_foo(str);\n"
+		"}\n\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_constructor_initializer()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	lccc::cc_class::constructor::ptr_t ctor(src->make_constructor());
+
+	lccc::cc_base_class::ptr_t base1(lccc::cc_base_class::make("bar"));
+	lccc::cc_base_class::ptr_t base2(lccc::cc_base_class::make("baz"));
+
+	ctor->add(base1->make_initializer("42"));
+	ctor->add(base2->make_initializer("\"hello\""));
+	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	ctor->define(bl);
+
+	std::stringstream out;
+	ctor->print(out);
+	std::string expected(
+		"foo()\n"
+		":\n"
+		"\tbar(42),\n"
+		"\tbaz(\"hello\")\n"
+		"{\n"
 		"}\n\n"
 	);
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());

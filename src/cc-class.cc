@@ -26,6 +26,8 @@
 #include <lccc/cc.h>
 #include <lccc/indent.h>
 
+#include <boost/foreach.hpp>
+
 namespace lccc {
 
 cc_class::constructor::constructor(std::string const& name)
@@ -44,6 +46,19 @@ std::ostream & cc_class::constructor::print(std::ostream & os) const
 	os << "(" << (src_ ? named_args() : args()) << ")";
 	if (src_) {
 		os << "\n";
+		if (!initializers_.empty()) {
+			os << ":\n";
+			{
+				indent ind(os);
+				std::string sep;
+				BOOST_FOREACH(cc_base_class::initializer::ptr_t const& init, initializers_) {
+					os << sep;
+					init->print(os);
+					sep = ",\n";
+				}
+			}
+			os << "\n";
+		}
 		src_->print(os);
 	} else {
 		os << ";";
