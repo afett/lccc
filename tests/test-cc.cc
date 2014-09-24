@@ -23,6 +23,7 @@ private:
 	void test_base_class();
 	void test_class();
 	void test_visibility();
+	void test_constructor();
 
 	CPPUNIT_TEST_SUITE(test);
 	CPPUNIT_TEST(test_namespace);
@@ -36,6 +37,7 @@ private:
 	CPPUNIT_TEST(test_base_class);
 	CPPUNIT_TEST(test_class);
 	CPPUNIT_TEST(test_visibility);
+	CPPUNIT_TEST(test_constructor);
 	CPPUNIT_TEST_SUITE_END();
 };
 
@@ -208,6 +210,26 @@ void test::test_visibility()
 		"private:\n"
 		"\tvoid foo_private();\n"
 		"};\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_constructor()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	lccc::cc_class::constructor::ptr_t ctor(src->make_constructor());
+	ctor->add_arg("std::string const&", "str");
+	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	bl->src() << "do_foo(str);\n";
+	ctor->define(bl);
+
+	std::stringstream out;
+	ctor->print(out);
+	std::string expected(
+		"foo(std::string const& str)\n"
+		"{\n"
+		"\tdo_foo(str);\n"
+		"}\n\n"
 	);
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }

@@ -41,7 +41,14 @@ void cc_class::constructor::add(cc_base_class::initializer::ptr_t const& init)
 std::ostream & cc_class::constructor::print(std::ostream & os) const
 {
 	os << name_;
-	os << "(" << args() << ");\n";
+	os << "(" << (src_ ? named_args() : args()) << ")";
+	if (src_) {
+		os << "\n";
+		src_->print(os);
+	} else {
+		os << ";";
+	}
+	os << "\n";
 	return os;
 }
 
