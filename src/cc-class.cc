@@ -61,7 +61,14 @@ cc_class::destructor::destructor(std::string const& name)
 std::ostream & cc_class::destructor::print(std::ostream & os) const
 {
 	os << (virtual_ ? "virtual " : "");
-	os << "~" << name_ << "();\n";
+	os << "~" << name_ << "()";
+	if (src_) {
+		os << "\n";
+		src_->print(os);
+	} else {
+		os << ";";
+	}
+	os << "\n";
 	return os;
 }
 

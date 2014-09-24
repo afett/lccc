@@ -24,6 +24,8 @@ private:
 	void test_class();
 	void test_visibility();
 	void test_constructor();
+	void test_destructor();
+	void test_virtual_destructor();
 
 	CPPUNIT_TEST_SUITE(test);
 	CPPUNIT_TEST(test_namespace);
@@ -38,6 +40,8 @@ private:
 	CPPUNIT_TEST(test_class);
 	CPPUNIT_TEST(test_visibility);
 	CPPUNIT_TEST(test_constructor);
+	CPPUNIT_TEST(test_destructor);
+	CPPUNIT_TEST(test_virtual_destructor);
 	CPPUNIT_TEST_SUITE_END();
 };
 
@@ -227,6 +231,45 @@ void test::test_constructor()
 	ctor->print(out);
 	std::string expected(
 		"foo(std::string const& str)\n"
+		"{\n"
+		"\tdo_foo(str);\n"
+		"}\n\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_destructor()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	lccc::cc_class::destructor::ptr_t dtor(src->make_destructor());
+	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	bl->src() << "do_foo(str);\n";
+	dtor->define(bl);
+
+	std::stringstream out;
+	dtor->print(out);
+	std::string expected(
+		"~foo()\n"
+		"{\n"
+		"\tdo_foo(str);\n"
+		"}\n\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_virtual_destructor()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	lccc::cc_class::destructor::ptr_t dtor(src->make_destructor());
+	dtor->make_virtual();
+	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	bl->src() << "do_foo(str);\n";
+	dtor->define(bl);
+
+	std::stringstream out;
+	dtor->print(out);
+	std::string expected(
+		"virtual ~foo()\n"
 		"{\n"
 		"\tdo_foo(str);\n"
 		"}\n\n"
