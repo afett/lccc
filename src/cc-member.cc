@@ -40,7 +40,7 @@ cc_member::cc_member(std::string const& type, std::string const& name)
 
 std::ostream & cc_member::print(std::ostream & os) const
 {
-	os << type_ << " " << name_ << "\n;";
+	os << type_ << " " << name_ << ";\n";
 	return os;
 }
 

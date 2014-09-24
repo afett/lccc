@@ -28,6 +28,7 @@ private:
 	void test_constructor_initializer();
 	void test_destructor();
 	void test_virtual_destructor();
+	void test_member();
 
 	CPPUNIT_TEST_SUITE(test);
 	CPPUNIT_TEST(test_namespace);
@@ -46,6 +47,7 @@ private:
 	CPPUNIT_TEST(test_constructor_initializer);
 	CPPUNIT_TEST(test_destructor);
 	CPPUNIT_TEST(test_virtual_destructor);
+	CPPUNIT_TEST(test_member);
 	CPPUNIT_TEST_SUITE_END();
 };
 
@@ -324,6 +326,16 @@ void test::test_virtual_destructor()
 		"\tdo_foo(str);\n"
 		"}\n\n"
 	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_member()
+{
+	lccc::cc_member::ptr_t src(lccc::cc_member::make("void *", "bar_"));
+
+	std::stringstream out;
+	src->print(out);
+	std::string expected("void * bar_;\n");
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
