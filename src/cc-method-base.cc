@@ -33,9 +33,11 @@ void cc_method_base::add_arg(std::string const& type, std::string name)
 	args_.push_back(argument(type, name));
 }
 
-void cc_method_base::define(cc_block::ptr_t const& src)
+cc_block::ptr_t
+cc_method_base::define(cc_block::ptr_t const& src)
 {
 	src_ = src;
+	return src;
 }
 
 cc_method_base::argument::argument(std::string const& type_, std::string const& name_)

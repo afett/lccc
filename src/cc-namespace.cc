@@ -37,9 +37,11 @@ cc_namespace::cc_namespace(std::string const& name)
 	name_(name)
 { }
 
-void cc_namespace::add(src::ptr_t const& src)
+src::ptr_t
+cc_namespace::add(src::ptr_t const& src)
 {
 	content_.push_back(src);
+	return src;
 }
 
 std::ostream & cc_namespace::print(std::ostream & os) const

@@ -35,9 +35,11 @@ cc_class::constructor::constructor(std::string const& name)
 	cc_method_base(name)
 { }
 
-void cc_class::constructor::add(cc_base_class::initializer::ptr_t const& init)
+cc_base_class::initializer::ptr_t
+cc_class::constructor::add(cc_base_class::initializer::ptr_t const& init)
 {
 	initializers_.push_back(init);
+	return init;
 }
 
 std::ostream & cc_class::constructor::print(std::ostream & os) const
@@ -107,24 +109,32 @@ std::ostream & cc_class::visibility::print(std::ostream & os) const
 	return os;
 }
 
-void cc_class::visibility::add(cc_method::ptr_t const& src)
+cc_method::ptr_t
+cc_class::visibility::add(cc_method::ptr_t const& src)
 {
 	content_.push_back(src);
+	return src;
 }
 
-void cc_class::visibility::add(cc_member::ptr_t const& src)
+cc_member::ptr_t
+cc_class::visibility::add(cc_member::ptr_t const& src)
 {
 	content_.push_back(src);
+	return src;
 }
 
-void cc_class::visibility::add(constructor::ptr_t const& src)
+cc_class::constructor::ptr_t
+cc_class::visibility::add(constructor::ptr_t const& src)
 {
 	content_.push_back(src);
+	return src;
 }
 
-void cc_class::visibility::add(destructor::ptr_t const& src)
+cc_class::destructor::ptr_t
+cc_class::visibility::add(destructor::ptr_t const& src)
 {
 	content_.push_back(src);
+	return src;
 }
 
 cc_class::ptr_t cc_class::make(std::string const& name)
@@ -192,9 +202,11 @@ std::ostream & cc_class::print(std::ostream & os) const
 	return os;
 }
 
-void cc_class::add(cc_base_class::ptr_t const& base)
+cc_base_class::ptr_t
+cc_class::add(cc_base_class::ptr_t const& base)
 {
 	base_classes_.push_back(base);
+	return base;
 }
 
 }

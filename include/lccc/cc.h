@@ -49,7 +49,7 @@ public:
 	typedef boost::shared_ptr<cc_method_base> ptr_t;
 
 	void add_arg(std::string const&, std::string name = "");
-	void define(cc_block::ptr_t const& src);
+	cc_block::ptr_t define(cc_block::ptr_t const& src);
 
 protected:
 	struct argument {
@@ -94,7 +94,7 @@ public:
 	typedef boost::shared_ptr<cc_namespace> ptr_t;
 
 	static ptr_t make(std::string const&);
-	void add(src::ptr_t const&);
+	src::ptr_t add(src::ptr_t const&);
 	std::ostream & print(std::ostream &) const;
 
 private:
@@ -154,7 +154,8 @@ public:
 		typedef boost::shared_ptr<constructor> ptr_t;
 
 		std::ostream & print(std::ostream & os) const;
-		void add(cc_base_class::initializer::ptr_t const&);
+		cc_base_class::initializer::ptr_t
+		add(cc_base_class::initializer::ptr_t const&);
 	private:
 		friend class cc_class;
 
@@ -183,10 +184,10 @@ public:
 		typedef boost::shared_ptr<visibility> ptr_t;
 
 		std::ostream & print(std::ostream & os) const;
-		void add(cc_method::ptr_t const&);
-		void add(cc_member::ptr_t const&);
-		void add(constructor::ptr_t const&);
-		void add(destructor::ptr_t const&);
+		cc_method::ptr_t add(cc_method::ptr_t const&);
+		cc_member::ptr_t add(cc_member::ptr_t const&);
+		constructor::ptr_t add(constructor::ptr_t const&);
+		destructor::ptr_t add(destructor::ptr_t const&);
 
 	private:
 		friend class cc_class;
@@ -205,7 +206,7 @@ public:
 	visibility::ptr_t vpublic() const;
 	visibility::ptr_t vprotected() const;
 	std::ostream & print(std::ostream &) const;
-	void add(cc_base_class::ptr_t const&);
+	cc_base_class::ptr_t add(cc_base_class::ptr_t const&);
 
 private:
 	cc_class(std::string const&);

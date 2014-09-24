@@ -39,9 +39,11 @@ cpp_guard::ptr_t cpp_guard::make(std::string const& name)
 	return ptr_t(new cpp_guard(name));
 }
 
-void cpp_guard::add(src::ptr_t const& src)
+src::ptr_t
+cpp_guard::add(src::ptr_t const& src)
 {
 	ifndef_->add(src);
+	return src;
 }
 
 std::ostream & cpp_guard::print(std::ostream & os) const

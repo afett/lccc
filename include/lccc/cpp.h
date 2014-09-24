@@ -60,7 +60,7 @@ class cpp_condition : public container {
 public:
 	typedef boost::shared_ptr<cpp_condition> ptr_t;
 
-	void add(src::ptr_t const&);
+	src::ptr_t add(src::ptr_t const&);
 
 	std::ostream & print(std::ostream &) const;
 
@@ -94,7 +94,7 @@ public:
 	typedef boost::shared_ptr<cpp_guard> ptr_t;
 
 	static ptr_t make(std::string const&);
-	void add(src::ptr_t const&);
+	src::ptr_t add(src::ptr_t const&);
 	std::ostream & print(std::ostream & os) const;
 
 private:

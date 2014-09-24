@@ -27,9 +27,11 @@
 
 namespace lccc {
 
-void cpp_condition::add(src::ptr_t const& src)
+src::ptr_t
+cpp_condition::add(src::ptr_t const& src)
 {
 	content_.push_back(src);
+	return src;
 }
 
 std::ostream & cpp_condition::print(std::ostream & os) const
