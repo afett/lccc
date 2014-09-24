@@ -205,6 +205,7 @@ public:
 	visibility::ptr_t vpublic() const;
 	visibility::ptr_t vprotected() const;
 	std::ostream & print(std::ostream &) const;
+	void add(cc_base_class::ptr_t const&);
 
 private:
 	cc_class(std::string const&);
@@ -213,6 +214,7 @@ private:
 	visibility::ptr_t public_;
 	visibility::ptr_t protected_;
 	visibility::ptr_t private_;
+	std::vector<cc_base_class::ptr_t> base_classes_;
 };
 
 }

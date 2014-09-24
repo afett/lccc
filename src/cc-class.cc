@@ -171,10 +171,30 @@ cc_class::visibility::ptr_t cc_class::vprotected() const
 
 std::ostream & cc_class::print(std::ostream & os) const
 {
-	os << "class " << name_ << " {\n";
+	os << "class " << name_ << " ";
+	if (!base_classes_.empty()) {
+		os << ":\n";
+		{
+			indent ind(os);
+			std::string sep;
+			BOOST_FOREACH(cc_base_class::ptr_t const& base, base_classes_) {
+				os << sep << "public ";
+				base->print(os);
+				sep = ",\n";
+			}
+		}
+		os << "\n";
+	}
+
+	os << "{\n";
 	print_content(os);
 	os << "};\n";
 	return os;
+}
+
+void cc_class::add(cc_base_class::ptr_t const& base)
+{
+	base_classes_.push_back(base);
 }
 
 }

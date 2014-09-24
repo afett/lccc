@@ -22,6 +22,7 @@ private:
 	void test_method_definition();
 	void test_base_class();
 	void test_class();
+	void test_class_inheritance();
 	void test_visibility();
 	void test_constructor();
 	void test_constructor_initializer();
@@ -39,6 +40,7 @@ private:
 	CPPUNIT_TEST(test_method_definition);
 	CPPUNIT_TEST(test_base_class);
 	CPPUNIT_TEST(test_class);
+	CPPUNIT_TEST(test_class_inheritance);
 	CPPUNIT_TEST(test_visibility);
 	CPPUNIT_TEST(test_constructor);
 	CPPUNIT_TEST(test_constructor_initializer);
@@ -193,6 +195,26 @@ void test::test_class()
 	src->print(out);
 	std::string expected(
 		"class foo {\n"
+		"};\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_class_inheritance()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	lccc::cc_base_class::ptr_t base1(lccc::cc_base_class::make("bar"));
+	lccc::cc_base_class::ptr_t base2(lccc::cc_base_class::make("baz"));
+	src->add(base1);
+	src->add(base2);
+
+	std::stringstream out;
+	src->print(out);
+	std::string expected(
+		"class foo :\n"
+		"\tpublic bar,\n"
+		"\tpublic baz\n"
+		"{\n"
 		"};\n"
 	);
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
