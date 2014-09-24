@@ -1,4 +1,4 @@
-LCCC_DEBUG = 1
+LCCC_DEBUG ?=
 
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Werror
@@ -7,6 +7,8 @@ CPPFLAGS = -Iinclude
 
 ifeq ($(LCCC_DEBUG),1)
 CXXFLAGS += -g -O0
+else
+CXXFLAGS += -O2
 endif
 
 PREFIX ?= /usr/local
