@@ -154,11 +154,13 @@ public:
 		typedef boost::shared_ptr<constructor> ptr_t;
 
 		std::ostream & print(std::ostream & os) const;
-
+		void add(cc_base_class::initializer::ptr_t const&);
 	private:
 		friend class cc_class;
 
 		constructor(std::string const&);
+
+		std::vector<cc_base_class::initializer::ptr_t> initializers_;
 	};
 
 	class destructor : public cc_method_base {

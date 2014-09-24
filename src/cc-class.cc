@@ -33,6 +33,11 @@ cc_class::constructor::constructor(std::string const& name)
 	cc_method_base(name)
 { }
 
+void cc_class::constructor::add(cc_base_class::initializer::ptr_t const& init)
+{
+	initializers_.push_back(init);
+}
+
 std::ostream & cc_class::constructor::print(std::ostream & os) const
 {
 	os << name_;
