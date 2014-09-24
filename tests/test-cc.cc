@@ -21,6 +21,8 @@ private:
 	void test_method_args();
 	void test_method_definition();
 	void test_base_class();
+	void test_class();
+	void test_visibility();
 
 	CPPUNIT_TEST_SUITE(test);
 	CPPUNIT_TEST(test_namespace);
@@ -32,6 +34,8 @@ private:
 	CPPUNIT_TEST(test_method_args);
 	CPPUNIT_TEST(test_method_definition);
 	CPPUNIT_TEST(test_base_class);
+	CPPUNIT_TEST(test_class);
+	CPPUNIT_TEST(test_visibility);
 	CPPUNIT_TEST_SUITE_END();
 };
 
@@ -171,6 +175,41 @@ void test::test_base_class()
 		std::string expected("foo(42)");
 		CPPUNIT_ASSERT_EQUAL(expected, out.str());
 	}
+}
+
+void test::test_class()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+
+	std::stringstream out;
+	src->print(out);
+	std::string expected(
+		"class foo {\n"
+		"};\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
+}
+
+void test::test_visibility()
+{
+	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	src->vpublic()->add(lccc::cc_method::make("void", "foo_public"));
+	src->vprivate()->add(lccc::cc_method::make("void", "foo_private"));
+	src->vprotected()->add(lccc::cc_method::make("void", "foo_protected"));
+
+	std::stringstream out;
+	src->print(out);
+	std::string expected(
+		"class foo {\n"
+		"public:\n"
+		"\tvoid foo_public();\n"
+		"protected:\n"
+		"\tvoid foo_protected();\n"
+		"private:\n"
+		"\tvoid foo_private();\n"
+		"};\n"
+	);
+	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
 }}
