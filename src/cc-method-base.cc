@@ -78,4 +78,9 @@ std::string cc_method_base::named_args() const
 	return res.str();
 }
 
+std::string cc_method_base::name() const
+{
+	return name_;
+}
+
 }

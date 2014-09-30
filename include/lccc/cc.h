@@ -50,6 +50,7 @@ public:
 
 	void add_arg(std::string const&, std::string name = "");
 	cc_block::ptr_t define(cc_block::ptr_t const& src);
+	std::string name() const;
 
 protected:
 	struct argument {
