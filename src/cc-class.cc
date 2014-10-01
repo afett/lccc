@@ -209,4 +209,9 @@ cc_class::add(cc_base_class::ptr_t const& base)
 	return base;
 }
 
+std::string cc_class::name() const
+{
+	return name_;
+}
+
 }
