@@ -105,7 +105,7 @@ void test::test_method()
 	lccc::cc_method::ptr_t src(lccc::cc_method::make("int", "foo"));
 	std::stringstream out;
 	src->print(out);
-	std::string expected("int foo();\n");
+	std::string expected("int foo();\n\n");
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
@@ -115,7 +115,7 @@ void test::test_method_virtual()
 	src->make_virtual();
 	std::stringstream out;
 	src->print(out);
-	std::string expected("virtual int foo();\n");
+	std::string expected("virtual int foo();\n\n");
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
@@ -125,7 +125,7 @@ void test::test_method_abstract()
 	src->make_abstract();
 	std::stringstream out;
 	src->print(out);
-	std::string expected("virtual int foo() = 0;\n");
+	std::string expected("virtual int foo() = 0;\n\n");
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
@@ -135,7 +135,7 @@ void test::test_method_const()
 	src->make_const();
 	std::stringstream out;
 	src->print(out);
-	std::string expected("int foo() const;\n");
+	std::string expected("int foo() const;\n\n");
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
@@ -146,7 +146,7 @@ void test::test_method_args()
 	src->add_arg("std::string const&", "f2");
 	std::stringstream out;
 	src->print(out);
-	std::string expected("void foo(int, std::string const&);\n");
+	std::string expected("void foo(int, std::string const&);\n\n");
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());
 }
 
@@ -235,10 +235,13 @@ void test::test_visibility()
 		"class foo {\n"
 		"public:\n"
 		"\tvoid foo_public();\n"
+		"\n"
 		"protected:\n"
 		"\tvoid foo_protected();\n"
+		"\n"
 		"private:\n"
 		"\tvoid foo_private();\n"
+		"\n"
 		"};\n"
 	);
 	CPPUNIT_ASSERT_EQUAL(expected, out.str());

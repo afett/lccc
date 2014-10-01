@@ -67,12 +67,12 @@ std::ostream & cc_method::print(std::ostream & os) const
 		os << " const";
 	}
 	if (abstract_) {
-		os << " = 0;";
+		os << " = 0;\n";
 	} else if (src_) {
 		os << "\n";
 		src_->print(os);
 	} else {
-		os << ";";
+		os << ";\n";
 	}
 	os << "\n";
 	return os;
