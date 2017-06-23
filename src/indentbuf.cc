@@ -7,7 +7,7 @@ indent::indent(std::streambuf* dest)
 :
 	dest_(dest),
 	line_start_(true),
-	owner_(NULL)
+	owner_(nullptr)
 { }
 
 indent::indent(std::ostream& dest, std::string indent)
@@ -22,7 +22,7 @@ indent::indent(std::ostream& dest, std::string indent)
 
 indent::~indent()
 {
-	if (owner_ != NULL) {
+	if (owner_ != nullptr) {
 		owner_->rdbuf(dest_);
 	}
 }
