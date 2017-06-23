@@ -26,14 +26,14 @@
 #ifndef LCCC_H
 #define LCCC_H
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 namespace lccc {
 
 class src {
 public:
-	typedef boost::shared_ptr<src> ptr_t;
+	typedef std::shared_ptr<src> ptr_t;
 
 	virtual std::ostream & print(std::ostream & os) const = 0;
 	virtual ~src();

@@ -33,7 +33,7 @@ namespace lccc {
 
 class cc_block : public src {
 public:
-	typedef boost::shared_ptr<cc_block> ptr_t;
+	typedef std::shared_ptr<cc_block> ptr_t;
 
 	static ptr_t make();
 	std::ostream & print(std::ostream & os) const;
@@ -46,7 +46,7 @@ private:
 
 class cc_method_base : public src {
 public:
-	typedef boost::shared_ptr<cc_method_base> ptr_t;
+	typedef std::shared_ptr<cc_method_base> ptr_t;
 
 	void add_arg(std::string const&, std::string name = "");
 	cc_block::ptr_t define(cc_block::ptr_t const& src);
@@ -71,7 +71,7 @@ protected:
 
 class cc_method : public cc_method_base {
 public:
-	typedef boost::shared_ptr<cc_method> ptr_t;
+	typedef std::shared_ptr<cc_method> ptr_t;
 
 	static ptr_t make(std::string const&, std::string const&);
 
@@ -92,7 +92,7 @@ private:
 
 class cc_namespace : public container {
 public:
-	typedef boost::shared_ptr<cc_namespace> ptr_t;
+	typedef std::shared_ptr<cc_namespace> ptr_t;
 
 	static ptr_t make(std::string const&);
 	src::ptr_t add(src::ptr_t const&);
@@ -106,7 +106,7 @@ private:
 
 class cc_member : public src {
 public:
-	typedef boost::shared_ptr<cc_member> ptr_t;
+	typedef std::shared_ptr<cc_member> ptr_t;
 
 	static ptr_t make(std::string const&, std::string const&);
 	std::ostream & print(std::ostream &) const;
@@ -120,11 +120,11 @@ private:
 
 class cc_base_class : public src {
 public:
-        typedef boost::shared_ptr<cc_base_class> ptr_t;
+        typedef std::shared_ptr<cc_base_class> ptr_t;
 
         class initializer : public src {
         public:
-                typedef boost::shared_ptr<initializer> ptr_t;
+                typedef std::shared_ptr<initializer> ptr_t;
 
                 std::ostream & print(std::ostream &) const;
         private:
@@ -148,11 +148,11 @@ private:
 
 class cc_class : public container {
 public:
-	typedef boost::shared_ptr<cc_class> ptr_t;
+	typedef std::shared_ptr<cc_class> ptr_t;
 
 	class constructor : public cc_method_base {
 	public:
-		typedef boost::shared_ptr<constructor> ptr_t;
+		typedef std::shared_ptr<constructor> ptr_t;
 
 		std::ostream & print(std::ostream & os) const;
 		cc_base_class::initializer::ptr_t
@@ -167,7 +167,7 @@ public:
 
 	class destructor : public cc_method_base {
 	public:
-		typedef boost::shared_ptr<destructor> ptr_t;
+		typedef std::shared_ptr<destructor> ptr_t;
 
 		std::ostream & print(std::ostream &) const;
 		void make_virtual();
@@ -182,7 +182,7 @@ public:
 
 	class visibility : public container {
 	public:
-		typedef boost::shared_ptr<visibility> ptr_t;
+		typedef std::shared_ptr<visibility> ptr_t;
 
 		std::ostream & print(std::ostream & os) const;
 		cc_method::ptr_t add(cc_method::ptr_t const&);

@@ -32,7 +32,7 @@ namespace lccc {
 
 class header : public src {
 public:
-	typedef boost::shared_ptr<header> ptr_t;
+	typedef std::shared_ptr<header> ptr_t;
 
 	static ptr_t make(std::string const&);
 	void add(src::ptr_t const&);
