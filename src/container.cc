@@ -24,13 +24,12 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <lccc/base.h>
-#include <boost/foreach.hpp>
 
 namespace lccc {
 
 std::ostream & container::print_content(std::ostream & os) const
 {
-	BOOST_FOREACH(src::ptr_t const& src, content_) {
+	for (auto src: content_) {
 		src->print(os);
 	}
 

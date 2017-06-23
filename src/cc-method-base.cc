@@ -24,7 +24,6 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <lccc/cc.h>
-#include <boost/foreach.hpp>
 
 namespace lccc {
 
@@ -55,7 +54,7 @@ std::string cc_method_base::args() const
 {
 	std::string sep;
 	std::stringstream res;
-	BOOST_FOREACH(argument const& arg, args_) {
+	for (auto arg: args_) {
 		res << sep << arg.type;
 		sep = ", ";
 	}
@@ -67,7 +66,7 @@ std::string cc_method_base::named_args() const
 {
 	std::string sep;
 	std::stringstream res;
-	BOOST_FOREACH(argument const& arg, args_) {
+	for (auto arg: args_) {
 		res << sep << arg.type;
 		if (!arg.name.empty()) {
 			res << " " << arg.name;
