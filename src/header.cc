@@ -25,19 +25,19 @@
  */
 
 #include <lccc/header.h>
-#include <boost/range/algorithm/replace_copy_if.hpp>
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/case_conv.hpp>
 
 namespace {
 
-std::string path2guard(std::string const& path)
+std::string path2guard(std::string path)
 {
-	std::string res;
-	boost::replace_copy_if(path, std::back_inserter(res),
-		boost::is_any_of(".-/"), '_');
-	boost::to_upper(res);
-	return res;
+	for (auto & c: path) {
+		switch (c) {
+		case '.': case '-': case '/': c = '_'; break;
+		default:
+			c = ::toupper(c);
+		}
+	}
+	return path;
 }
 
 }
