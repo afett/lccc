@@ -36,10 +36,10 @@ class indent : public std::streambuf {
 public:
 	explicit indent(std::streambuf*);
 	explicit indent(std::ostream &, std::string indent = "\t");
-	virtual ~indent();
+	~indent() override;
 
 protected:
-	virtual int overflow(int);
+	int overflow(int) override;
 
 private:
 	std::string indent_;
