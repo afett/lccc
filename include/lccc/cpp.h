@@ -32,7 +32,7 @@ namespace lccc {
 
 class cpp_define : public src {
 public:
-	typedef std::shared_ptr<cpp_define> ptr_t;
+	using ptr_t = std::shared_ptr<cpp_define>;
 
 	static ptr_t make(std::string const&);
 	std::ostream & print(std::ostream &) const;
@@ -45,7 +45,7 @@ private:
 
 class cpp_include : public src {
 public:
-	typedef std::shared_ptr<cpp_include> ptr_t;
+	using ptr_t = std::shared_ptr<cpp_include>;
 
 	static ptr_t make(std::string const&);
 	std::ostream & print(std::ostream &) const;
@@ -58,7 +58,7 @@ private:
 
 class cpp_condition : public container {
 public:
-	typedef std::shared_ptr<cpp_condition> ptr_t;
+	using ptr_t = std::shared_ptr<cpp_condition>;
 
 	src::ptr_t add(src::ptr_t const&);
 
@@ -73,7 +73,7 @@ protected:
 
 class cpp_ifdef : public cpp_condition {
 public:
-	typedef std::shared_ptr<cpp_ifdef> ptr_t;
+	using ptr_t = std::shared_ptr<cpp_ifdef>;
 
 	static ptr_t make(std::string const&);
 private:
@@ -82,7 +82,7 @@ private:
 
 class cpp_ifndef : public cpp_condition {
 public:
-	typedef std::shared_ptr<cpp_ifndef> ptr_t;
+	using ptr_t = std::shared_ptr<cpp_ifndef>;
 
 	static ptr_t make(std::string const&);
 private:
@@ -91,7 +91,7 @@ private:
 
 class cpp_guard : public src {
 public:
-	typedef std::shared_ptr<cpp_guard> ptr_t;
+	using ptr_t = std::shared_ptr<cpp_guard>;
 
 	static ptr_t make(std::string const&);
 	src::ptr_t add(src::ptr_t const&);

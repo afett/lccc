@@ -32,7 +32,7 @@ namespace lccc {
 
 class header : public src {
 public:
-	typedef std::shared_ptr<header> ptr_t;
+	using ptr_t = std::shared_ptr<header>;
 
 	static ptr_t make(std::string const&);
 	void add(src::ptr_t const&);

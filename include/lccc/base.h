@@ -33,7 +33,7 @@ namespace lccc {
 
 class src {
 public:
-	typedef std::shared_ptr<src> ptr_t;
+	using ptr_t = std::shared_ptr<src>;
 
 	virtual std::ostream & print(std::ostream & os) const = 0;
 	virtual ~src();
