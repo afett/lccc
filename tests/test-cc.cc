@@ -64,9 +64,9 @@ void test::tearDown()
 
 void test::test_namespace()
 {
-	lccc::cc_namespace::ptr_t ns1(lccc::cc_namespace::make("foo"));
-	lccc::cc_namespace::ptr_t ns2(lccc::cc_namespace::make("bar"));
-	lccc::cc_namespace::ptr_t ns3(lccc::cc_namespace::make("baz"));
+	auto ns1(lccc::cc_namespace::make("foo"));
+	auto ns2(lccc::cc_namespace::make("bar"));
+	auto ns3(lccc::cc_namespace::make("baz"));
 	ns1->add(ns2);
 	ns2->add(ns3);
 	std::stringstream out;
@@ -84,7 +84,7 @@ void test::test_namespace()
 
 void test::test_block()
 {
-	lccc::cc_block::ptr_t src(lccc::cc_block::make());
+	auto src(lccc::cc_block::make());
 	src->src() << "do_foo();\n";
 	src->src() << "do_bar();\n";
 	src->src() << "do_baz();\n";
@@ -102,7 +102,7 @@ void test::test_block()
 
 void test::test_method()
 {
-	lccc::cc_method::ptr_t src(lccc::cc_method::make("int", "foo"));
+	auto src(lccc::cc_method::make("int", "foo"));
 	std::stringstream out;
 	src->print(out);
 	std::string expected("int foo();\n\n");
@@ -111,7 +111,7 @@ void test::test_method()
 
 void test::test_method_virtual()
 {
-	lccc::cc_method::ptr_t src(lccc::cc_method::make("int", "foo"));
+	auto src(lccc::cc_method::make("int", "foo"));
 	src->make_virtual();
 	std::stringstream out;
 	src->print(out);
@@ -121,7 +121,7 @@ void test::test_method_virtual()
 
 void test::test_method_abstract()
 {
-	lccc::cc_method::ptr_t src(lccc::cc_method::make("int", "foo"));
+	auto src(lccc::cc_method::make("int", "foo"));
 	src->make_abstract();
 	std::stringstream out;
 	src->print(out);
@@ -131,7 +131,7 @@ void test::test_method_abstract()
 
 void test::test_method_const()
 {
-	lccc::cc_method::ptr_t src(lccc::cc_method::make("int", "foo"));
+	auto src(lccc::cc_method::make("int", "foo"));
 	src->make_const();
 	std::stringstream out;
 	src->print(out);
@@ -141,7 +141,7 @@ void test::test_method_const()
 
 void test::test_method_args()
 {
-	lccc::cc_method::ptr_t src(lccc::cc_method::make("void", "foo"));
+	auto src(lccc::cc_method::make("void", "foo"));
 	src->add_arg("int", "f1");
 	src->add_arg("std::string const&", "f2");
 	std::stringstream out;
@@ -152,7 +152,7 @@ void test::test_method_args()
 
 void test::test_method_definition()
 {
-	lccc::cc_method::ptr_t src(lccc::cc_method::make("void", "foo"));
+	auto src(lccc::cc_method::make("void", "foo"));
 	src->add_arg("std::string const&", "str");
 	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
 	bl->src() << "do_foo(str);\n";
@@ -171,7 +171,7 @@ void test::test_method_definition()
 
 void test::test_base_class()
 {
-	lccc::cc_base_class::ptr_t src(lccc::cc_base_class::make("foo"));
+	auto src(lccc::cc_base_class::make("foo"));
 
 	{
 		std::stringstream out;
@@ -182,7 +182,7 @@ void test::test_base_class()
 
 	{
 		std::stringstream out;
-		lccc::cc_base_class::initializer::ptr_t init(src->make_initializer("42"));
+		auto init(src->make_initializer("42"));
 		init->print(out);
 		std::string expected("foo(42)");
 		CPPUNIT_ASSERT_EQUAL(expected, out.str());
@@ -191,7 +191,7 @@ void test::test_base_class()
 
 void test::test_class()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	auto src(lccc::cc_class::make("foo"));
 
 	std::stringstream out;
 	src->print(out);
@@ -204,9 +204,9 @@ void test::test_class()
 
 void test::test_class_inheritance()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
-	lccc::cc_base_class::ptr_t base1(lccc::cc_base_class::make("bar"));
-	lccc::cc_base_class::ptr_t base2(lccc::cc_base_class::make("baz"));
+	auto src(lccc::cc_class::make("foo"));
+	auto base1(lccc::cc_base_class::make("bar"));
+	auto base2(lccc::cc_base_class::make("baz"));
 	src->add(base1);
 	src->add(base2);
 
@@ -224,7 +224,7 @@ void test::test_class_inheritance()
 
 void test::test_visibility()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
+	auto src(lccc::cc_class::make("foo"));
 	src->vpublic()->add(lccc::cc_method::make("void", "foo_public"));
 	src->vprivate()->add(lccc::cc_method::make("void", "foo_private"));
 	src->vprotected()->add(lccc::cc_method::make("void", "foo_protected"));
@@ -249,10 +249,10 @@ void test::test_visibility()
 
 void test::test_constructor()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
-	lccc::cc_class::constructor::ptr_t ctor(src->make_constructor());
+	auto src(lccc::cc_class::make("foo"));
+	auto ctor(src->make_constructor());
 	ctor->add_arg("std::string const&", "str");
-	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	auto bl(lccc::cc_block::make());
 	bl->src() << "do_foo(str);\n";
 	ctor->define(bl);
 
@@ -269,15 +269,15 @@ void test::test_constructor()
 
 void test::test_constructor_initializer()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
-	lccc::cc_class::constructor::ptr_t ctor(src->make_constructor());
+	auto src(lccc::cc_class::make("foo"));
+	auto ctor(src->make_constructor());
 
-	lccc::cc_base_class::ptr_t base1(lccc::cc_base_class::make("bar"));
-	lccc::cc_base_class::ptr_t base2(lccc::cc_base_class::make("baz"));
+	auto base1(lccc::cc_base_class::make("bar"));
+	auto base2(lccc::cc_base_class::make("baz"));
 
 	ctor->add(base1->make_initializer("42"));
 	ctor->add(base2->make_initializer("\"hello\""));
-	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	auto bl(lccc::cc_block::make());
 	ctor->define(bl);
 
 	std::stringstream out;
@@ -295,9 +295,9 @@ void test::test_constructor_initializer()
 
 void test::test_destructor()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
-	lccc::cc_class::destructor::ptr_t dtor(src->make_destructor());
-	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	auto src(lccc::cc_class::make("foo"));
+	auto dtor(src->make_destructor());
+	auto bl(lccc::cc_block::make());
 	bl->src() << "do_foo(str);\n";
 	dtor->define(bl);
 
@@ -314,10 +314,10 @@ void test::test_destructor()
 
 void test::test_virtual_destructor()
 {
-	lccc::cc_class::ptr_t src(lccc::cc_class::make("foo"));
-	lccc::cc_class::destructor::ptr_t dtor(src->make_destructor());
+	auto src(lccc::cc_class::make("foo"));
+	auto dtor(src->make_destructor());
 	dtor->make_virtual();
-	lccc::cc_block::ptr_t bl(lccc::cc_block::make());
+	auto bl(lccc::cc_block::make());
 	bl->src() << "do_foo(str);\n";
 	dtor->define(bl);
 
@@ -334,7 +334,7 @@ void test::test_virtual_destructor()
 
 void test::test_member()
 {
-	lccc::cc_member::ptr_t src(lccc::cc_member::make("void *", "bar_"));
+	auto src(lccc::cc_member::make("void *", "bar_"));
 
 	std::stringstream out;
 	src->print(out);
